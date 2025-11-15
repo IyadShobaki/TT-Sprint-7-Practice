@@ -65,3 +65,9 @@ function () {
 
   return Card;
 }();
+
+items.forEach(function (item) {
+  var card = new Card(item.title, item.description, item.price, item.image);
+  var cardElement = card.generateCard();
+  document.querySelector(".card-list__items").append(cardElement);
+});

@@ -65,3 +65,10 @@ class Card {
     return this._element;
   }
 }
+
+items.forEach((item) => {
+  const card = new Card(item.title, item.description, item.price, item.image);
+  const cardElement = card.generateCard();
+
+  document.querySelector(".card-list__items").append(cardElement);
+});
