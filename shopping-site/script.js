@@ -25,6 +25,10 @@ const items = [
   },
 ];
 
+const popupElement = document.querySelector(".popup");
+const popupImage = document.querySelector(".popup__image");
+const popupCloseButton = document.querySelector(".popup__close");
+
 class Card {
   constructor(data, cardSelector) {
     this._title = data.title;
@@ -32,6 +36,27 @@ class Card {
     this._price = data.price;
     this._image = data.image;
     this._cardSelector = cardSelector;
+  }
+
+  _setEventListeners() {
+    this._element
+      .querySelector(".card__image")
+      .addEventListener("click", () => {
+        this._handleOpenPopup();
+      });
+
+    popupCloseButton.addEventListener("click", () => {
+      this._handleClosePopup();
+    });
+  }
+
+  _handleOpenPopup() {
+    popupImage.src = this._image;
+    popupElement.classList.add("popup_is-opened");
+  }
+  _handleClosePopup() {
+    popupImage.src = "";
+    popupElement.classList.remove("popup_is-opened");
   }
 
   _getTemplate() {
@@ -64,6 +89,8 @@ class Card {
     this._element.querySelector(
       ".card__image"
     ).style.backgroundImage = `url(${this._image})`;
+
+    this._setEventListeners();
 
     return this._element;
   }

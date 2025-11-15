@@ -22,6 +22,9 @@ var items = [{
   description: "This bicycle model allows you to use both the pedal and the electric motor, or a combination of both. Airwheel R8 is equipped with a removable battery set to ensure sufficient power supply and to make your trips longer.",
   price: "$2000"
 }];
+var popupElement = document.querySelector(".popup");
+var popupImage = document.querySelector(".popup__image");
+var popupCloseButton = document.querySelector(".popup__close");
 
 var Card =
 /*#__PURE__*/
@@ -37,6 +40,31 @@ function () {
   }
 
   _createClass(Card, [{
+    key: "_setEventListeners",
+    value: function _setEventListeners() {
+      var _this = this;
+
+      this._element.querySelector(".card__image").addEventListener("click", function () {
+        _this._handleOpenPopup();
+      });
+
+      popupCloseButton.addEventListener("click", function () {
+        _this._handleClosePopup();
+      });
+    }
+  }, {
+    key: "_handleOpenPopup",
+    value: function _handleOpenPopup() {
+      popupImage.src = this._image;
+      popupElement.classList.add("popup_is-opened");
+    }
+  }, {
+    key: "_handleClosePopup",
+    value: function _handleClosePopup() {
+      popupImage.src = "";
+      popupElement.classList.remove("popup_is-opened");
+    }
+  }, {
     key: "_getTemplate",
     value: function _getTemplate() {
       var cardElement = document.querySelector(this._cardSelector).content.querySelector(".card").cloneNode(true);
@@ -60,6 +88,9 @@ function () {
       this._element.querySelector(".card__info").textContent = this._description;
       this._element.querySelector(".card__price-property").textContent = this._price;
       this._element.querySelector(".card__image").style.backgroundImage = "url(".concat(this._image, ")");
+
+      this._setEventListeners();
+
       return this._element;
     }
   }]);
