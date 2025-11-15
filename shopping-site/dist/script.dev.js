@@ -26,19 +26,20 @@ var items = [{
 var Card =
 /*#__PURE__*/
 function () {
-  function Card(title, description, price, image) {
+  function Card(data, cardSelector) {
     _classCallCheck(this, Card);
 
-    this._title = title;
-    this._description = description;
-    this._price = price;
-    this._image = image;
+    this._title = data.title;
+    this._description = data.description;
+    this._price = data.price;
+    this._image = data.image;
+    this._cardSelector = cardSelector;
   }
 
   _createClass(Card, [{
     key: "_getTemplate",
     value: function _getTemplate() {
-      var cardElement = document.querySelector(".horizontal-card").content.querySelector(".card").cloneNode(true);
+      var cardElement = document.querySelector(this._cardSelector).content.querySelector(".card").cloneNode(true);
       return cardElement;
     }
   }, {
@@ -67,7 +68,7 @@ function () {
 }();
 
 items.forEach(function (item) {
-  var card = new Card(item.title, item.description, item.price, item.image);
+  var card = new Card(item, ".horizontal-card");
   var cardElement = card.generateCard();
   document.querySelector(".card-list__items").append(cardElement);
 });
