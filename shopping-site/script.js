@@ -30,11 +30,7 @@ const popupImage = document.querySelector(".popup__image");
 const popupCloseButton = document.querySelector(".popup__close");
 
 class Card {
-  constructor(data, cardSelector) {
-    this._title = data.title;
-    this._description = data.description;
-    this._price = data.price;
-    this._image = data.image;
+  constructor(cardSelector) {
     this._cardSelector = cardSelector;
   }
 
@@ -93,6 +89,27 @@ class Card {
     this._setEventListeners();
 
     return this._element;
+  }
+}
+
+class DefaultCard extends Card {
+  constructor(data, cardSelector) {
+    super(cardSelector);
+
+    this._title = data.title;
+    this._description = data.description;
+    this._image = data.image;
+  }
+}
+
+class HorizontalCard extends Card {
+  constructor(data, cardSelector) {
+    super(cardSelector);
+
+    this._title = data.title;
+    this._description = data.description;
+    this._price = data.price;
+    this._image = data.image;
   }
 }
 

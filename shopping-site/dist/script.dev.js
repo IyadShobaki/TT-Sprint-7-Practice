@@ -1,5 +1,17 @@
 "use strict";
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -29,13 +41,9 @@ var popupCloseButton = document.querySelector(".popup__close");
 var Card =
 /*#__PURE__*/
 function () {
-  function Card(data, cardSelector) {
+  function Card(cardSelector) {
     _classCallCheck(this, Card);
 
-    this._title = data.title;
-    this._description = data.description;
-    this._price = data.price;
-    this._image = data.image;
     this._cardSelector = cardSelector;
   }
 
@@ -97,6 +105,47 @@ function () {
 
   return Card;
 }();
+
+var DefaultCard =
+/*#__PURE__*/
+function (_Card) {
+  _inherits(DefaultCard, _Card);
+
+  function DefaultCard(data, cardSelector) {
+    var _this2;
+
+    _classCallCheck(this, DefaultCard);
+
+    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(DefaultCard).call(this, cardSelector));
+    _this2._title = data.title;
+    _this2._description = data.description;
+    _this2._image = data.image;
+    return _this2;
+  }
+
+  return DefaultCard;
+}(Card);
+
+var HorizontalCard =
+/*#__PURE__*/
+function (_Card2) {
+  _inherits(HorizontalCard, _Card2);
+
+  function HorizontalCard(data, cardSelector) {
+    var _this3;
+
+    _classCallCheck(this, HorizontalCard);
+
+    _this3 = _possibleConstructorReturn(this, _getPrototypeOf(HorizontalCard).call(this, cardSelector));
+    _this3._title = data.title;
+    _this3._description = data.description;
+    _this3._price = data.price;
+    _this3._image = data.image;
+    return _this3;
+  }
+
+  return HorizontalCard;
+}(Card);
 
 items.forEach(function (item) {
   var card = new Card(item, ".horizontal-card");
