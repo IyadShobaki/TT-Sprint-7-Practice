@@ -6,6 +6,10 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
@@ -34,6 +38,7 @@ var items = [{
   description: "This bicycle model allows you to use both the pedal and the electric motor, or a combination of both. Airwheel R8 is equipped with a removable battery set to ensure sufficient power supply and to make your trips longer.",
   price: "$2000"
 }];
+var cardList = document.querySelector(".card-list__items");
 var popupElement = document.querySelector(".popup");
 var popupImage = document.querySelector(".popup__image");
 var popupCloseButton = document.querySelector(".popup__close");
@@ -48,17 +53,10 @@ function () {
   }
 
   _createClass(Card, [{
-    key: "_setEventListeners",
-    value: function _setEventListeners() {
-      var _this = this;
-
-      this._element.querySelector(".card__image").addEventListener("click", function () {
-        _this._handleOpenPopup();
-      });
-
-      popupCloseButton.addEventListener("click", function () {
-        _this._handleClosePopup();
-      });
+    key: "_getTemplate",
+    value: function _getTemplate() {
+      var cardElement = document.querySelector(this._cardSelector).content.querySelector(".card").cloneNode(true);
+      return cardElement;
     }
   }, {
     key: "_handleOpenPopup",
@@ -73,33 +71,17 @@ function () {
       popupElement.classList.remove("popup_is-opened");
     }
   }, {
-    key: "_getTemplate",
-    value: function _getTemplate() {
-      var cardElement = document.querySelector(this._cardSelector).content.querySelector(".card").cloneNode(true);
-      return cardElement;
-    }
-  }, {
-    key: "generateCard",
-    value: function generateCard() {
-      this._element = this._getTemplate();
-      this._element.querySelector(".card__title").textContent = this._title;
-      this._element.querySelector(".card__description").textContent = this._description;
-      this._element.querySelector(".card__price").textContent = this._price;
-      this._element.querySelector(".card__image").src = this._image;
-      return this._elements;
-    }
-  }, {
-    key: "generateCard",
-    value: function generateCard() {
-      this._element = this._getTemplate();
-      this._element.querySelector(".card__title").textContent = this._title;
-      this._element.querySelector(".card__info").textContent = this._description;
-      this._element.querySelector(".card__price-property").textContent = this._price;
-      this._element.querySelector(".card__image").style.backgroundImage = "url(".concat(this._image, ")");
+    key: "_setEventListeners",
+    value: function _setEventListeners() {
+      var _this = this;
 
-      this._setEventListeners();
+      this._element.addEventListener("click", function () {
+        _this._handleOpenPopup();
+      });
 
-      return this._element;
+      popupCloseButton.addEventListener("click", function () {
+        _this._handleClosePopup();
+      });
     }
   }]);
 
@@ -123,6 +105,19 @@ function (_Card) {
     return _this2;
   }
 
+  _createClass(DefaultCard, [{
+    key: "generateCard",
+    value: function generateCard() {
+      this._element = _get(_getPrototypeOf(DefaultCard.prototype), "_getTemplate", this).call(this);
+
+      _get(_getPrototypeOf(DefaultCard.prototype), "_setEventListeners", this).call(this);
+
+      this._element.querySelector(".card__image").style.backgroundImage = "url(".concat(this._image, ")");
+      this._element.querySelector(".card__title").textContent = this._title;
+      return this._element;
+    }
+  }]);
+
   return DefaultCard;
 }(Card);
 
@@ -144,11 +139,32 @@ function (_Card2) {
     return _this3;
   }
 
+  _createClass(HorizontalCard, [{
+    key: "generateCard",
+    value: function generateCard() {
+      this._element = _get(_getPrototypeOf(HorizontalCard.prototype), "_getTemplate", this).call(this);
+
+      _get(_getPrototypeOf(HorizontalCard.prototype), "_setEventListeners", this).call(this);
+
+      this._element.querySelector(".card__image").style.backgroundImage = "url(".concat(this._image, ")");
+      this._element.querySelector(".card__title").textContent = this._title;
+      this._element.querySelector(".card__info").textContent = this._description;
+      this._element.querySelector(".card__price-property").textContent = this._price;
+      return this._element;
+    }
+  }]);
+
   return HorizontalCard;
 }(Card);
 
-items.forEach(function (item) {
-  var card = new Card(item, ".horizontal-card");
-  var cardElement = card.generateCard();
-  document.querySelector(".card-list__items").append(cardElement);
-});
+function renderElements(isGrid) {
+  cardList.innerHTML = ""; // empty the contents of the container
+
+  items.forEach(function (item) {
+    var card = isGrid ? new DefaultCard(item, ".default-card") : new HorizontalCard(item, ".horizontal-card");
+    var cardElement = card.generateCard();
+    cardList.append(cardElement);
+  });
+}
+
+renderElements();
