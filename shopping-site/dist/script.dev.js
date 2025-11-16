@@ -42,6 +42,7 @@ var cardList = document.querySelector(".card-list__items");
 var popupElement = document.querySelector(".popup");
 var popupImage = document.querySelector(".popup__image");
 var popupCloseButton = document.querySelector(".popup__close");
+var popupCaption = document.querySelector(".popup__caption");
 var defaultCardButton = document.querySelector(".filter__button_type_grid");
 var horizontalCardButton = document.querySelector(".filter__button_type_column");
 
@@ -108,6 +109,20 @@ function (_Card) {
   }
 
   _createClass(DefaultCard, [{
+    key: "_handleOpenPopup",
+    value: function _handleOpenPopup() {
+      popupCaption.textContent = this._description;
+
+      _get(_getPrototypeOf(DefaultCard.prototype), "_handleOpenPopup", this).call(this);
+    }
+  }, {
+    key: "_handleClosePopup",
+    value: function _handleClosePopup() {
+      popupCaption.textContent = "";
+
+      _get(_getPrototypeOf(DefaultCard.prototype), "_handleClosePopup", this).call(this);
+    }
+  }, {
     key: "generateCard",
     value: function generateCard() {
       this._element = _get(_getPrototypeOf(DefaultCard.prototype), "_getTemplate", this).call(this);
