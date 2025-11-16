@@ -29,6 +29,10 @@ const cardList = document.querySelector(".card-list__items");
 const popupElement = document.querySelector(".popup");
 const popupImage = document.querySelector(".popup__image");
 const popupCloseButton = document.querySelector(".popup__close");
+const defaultCardButton = document.querySelector(".filter__button_type_grid");
+const horizontalCardButton = document.querySelector(
+  ".filter__button_type_column"
+);
 
 class Card {
   constructor(cardSelector) {
@@ -125,3 +129,11 @@ function renderElements(isGrid) {
 }
 
 renderElements();
+
+defaultCardButton.addEventListener("click", () => {
+  renderElements(true);
+});
+
+horizontalCardButton.addEventListener("click", () => {
+  renderElements(false);
+});

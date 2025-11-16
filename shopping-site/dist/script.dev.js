@@ -42,6 +42,8 @@ var cardList = document.querySelector(".card-list__items");
 var popupElement = document.querySelector(".popup");
 var popupImage = document.querySelector(".popup__image");
 var popupCloseButton = document.querySelector(".popup__close");
+var defaultCardButton = document.querySelector(".filter__button_type_grid");
+var horizontalCardButton = document.querySelector(".filter__button_type_column");
 
 var Card =
 /*#__PURE__*/
@@ -168,3 +170,9 @@ function renderElements(isGrid) {
 }
 
 renderElements();
+defaultCardButton.addEventListener("click", function () {
+  renderElements(true);
+});
+horizontalCardButton.addEventListener("click", function () {
+  renderElements(false);
+});
